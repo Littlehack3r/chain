@@ -694,24 +694,12 @@ function removeAbility(ability_id){
     refreshColorCodes();
 }
 
-function sortSelect(select, attr, order) {
-    if(attr === 'text'){
-        if(order === 'asc'){
-            $(select).html($(select).children('option').sort(function (x, y) {
-                return $(x).text().toUpperCase() < $(y).text().toUpperCase() ? -1 : 1;
-            }));
-            $(select).get(0).selectedIndex = 0;
-            e.preventDefault();
-        }// end asc
-        //if(order === 'desc'){
-          //  $(select).html($(select).children('option').sort(function (y, x) {
-            //    return $(x).text().toUpperCase() < $(y).text().toUpperCase() ? -1 : 1;
-           // }));
-           // $(select).get(0).selectedIndex = 0;
-            //e.preventDefault();
-        //}// end desc
-    }
-
+function sortSelect(select) {
+    $(select).html($(select).children('option').sort(function (x, y) {
+        return $(x).text().toUpperCase() < $(y).text().toUpperCase() ? -1 : 1;
+    }));
+    $(select).get(0).selectedIndex = 0;
+    //e.preventDefault();
 };
 
 function populateTechniques(parentId, exploits){
@@ -720,9 +708,12 @@ function populateTechniques(parentId, exploits){
     $(parent).find('#ability-ability-filter').empty();
     $(parent).find('#ability-technique-filter').empty().append("<option disabled='disabled' selected>Choose a technique</option>");
 
-    let sorted = sortSelect('#ability-tactic-filter', 'text', 'asc');
+    let sorted = sortSelect('#ability-tactic-filter');
+    $(parent).find('#ability-tactic-filter').append(sorted);
+    let tmp = $(parent).find('#ability-tactic-filter').append(sorted);
+    console.log(tmp)
 
-    $(parent).find('#ability-tactic-filter').empty().append(sorted)
+    //$(parent).find('#ability-tactic-filter').empty().append(sorted)
 
     let tactic = $(parent).find('#ability-tactic-filter').find(":selected").data('tactic');
     let found = [];
